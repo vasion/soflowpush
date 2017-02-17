@@ -2,7 +2,7 @@ from setuptools import setup
 
 import sys
 
-if sys.version_info[0]==2:
+if sys.version_info[0] == 3:
     reqs = ["aiohttp", "asynqp", "pika", "argparse", "watchtower"]
 else:
     #for client only
