@@ -39,7 +39,6 @@ if args.cloudwatch_logs:
 
 from soflowpush import worker
 
-print(args)
 loop = asyncio.get_event_loop()
 loop.run_until_complete(
     worker.consume(args.routing_key, args.host, args.port,
