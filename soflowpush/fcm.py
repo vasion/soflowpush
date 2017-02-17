@@ -13,7 +13,8 @@ ch = logging.StreamHandler()
 ft = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
 ch.setFormatter(ft)
 logger.addHandler(ch)
-logger.addHandler(watchtower.CloudWatchLogHandler())
+if os.environ.get("WATCHTOWER", False):
+    logger.addHandler(watchtower.CloudWatchLogHandler())
 logger.propagate = False
 
 logger.info("Starting 1")

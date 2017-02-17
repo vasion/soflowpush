@@ -31,6 +31,9 @@ os.environ["SOFLOW_FCM_API_KEY"] = args.fcm_api_key
 if args.dry_run:
     os.environ["SOFLOW_DRY_RUN"] = "1"
 
+if args.cloudwatch_logs:
+    os.environ["WATCHTOWER"] = True
+
 from soflowpush import worker
 
 print(args)
