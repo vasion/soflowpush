@@ -32,5 +32,5 @@ if __name__=="__main__":
     c = Client("queue.soflowstaging", "routing.soflowpush", "ufluser", os.environ.get("UFL_RABBIT_PASS", "pass"), "exchange.soflowpush", "rabbit.ultimatefanlive.com")
     now = time.time()
     end = now + 3
-    t = messages.MultiPush(list(range(1,3)), "hello", now, end)
+    t = messages.MultiPush(list([30,30, 30]), "hello", now, end)
     c.send_single_message(t)
