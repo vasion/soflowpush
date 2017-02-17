@@ -33,7 +33,7 @@ if args.dry_run:
     os.environ["SOFLOW_DRY_RUN"] = "1"
 
 if args.cloudwatch_logs:
-    os.environ["WATCHTOWER"] = True
+    os.environ["WATCHTOWER"] = "1"
     os.environ["WATCHTOWER_GROUP_NAME"] = args.log_group_name
 
 
