@@ -18,5 +18,5 @@ setup(name='soflowpush',
       packages=["soflowpush"],
       zip_safe=False,
       install_requires=reqs,
-      scripts=['bin/soflowpush-worker']
+      scripts=['bin/soflowpush-worker.py']
       )
