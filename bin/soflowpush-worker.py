@@ -20,7 +20,8 @@ parser.add_argument("--exchange-name", help="RabbitMQ password", action="store",
 parser.add_argument("--queue-name", help="RabbitMQ queue", action="store", default="queue.soflowpush")
 parser.add_argument("--fcm-api-key", help="FCM Queue", action="store")
 parser.add_argument("--dry-run", help="FCM Queue", action="store_true")
-parser.add_argument("--cloudwatch_logs", help="FCM Queue", action="store_true")
+parser.add_argument("--cloudwatch-logs", help="Send logs to cloudwatch", action="store_true")
+parser.add_argument("--log-group-name", help="Log Group Name", action="store", default="soflowpush")
 args = parser.parse_args()
 
 if args.fcm_api_key is None:
@@ -33,6 +34,8 @@ if args.dry_run:
 
 if args.cloudwatch_logs:
     os.environ["WATCHTOWER"] = True
+    os.environ["WATCHTOWER_GROUP_NAME"] = args.log_group_name
+
 
 from soflowpush import worker
 

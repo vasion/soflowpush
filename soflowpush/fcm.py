@@ -14,7 +14,7 @@ ft = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
 ch.setFormatter(ft)
 logger.addHandler(ch)
 if os.environ.get("WATCHTOWER", False):
-    logger.addHandler(watchtower.CloudWatchLogHandler())
+    logger.addHandler(watchtower.CloudWatchLogHandler(log_group=os.environ.get("WATCHTOWER_GROUP_NAME")))
 logger.propagate = False
 
 logger.info("Starting 1")
