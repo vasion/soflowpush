@@ -12,8 +12,9 @@ from soflowpush import messages, worker
 from asynqp.message import Message as AsyncpMessage
 
 from soflowpush.fcm import call_to_server
+from soflowpush.fcm import logger
 
-
+outstading = 0
 
 
 class WrongMessageType(Exception):
@@ -38,6 +39,7 @@ async def test_message_handler(msg):
 
 @require_message_type(messages.MultiPush)
 async def multi_message_handler(msg):
+    global outstading
     loop = asyncio.get_event_loop()
     task = loop.create_task(worker.create_connection())
     channel, connection, queue, exchange, routing_key = await task
@@ -48,10 +50,12 @@ async def multi_message_handler(msg):
     time_to_spend = msg.target_timestamp_end - msg.target_timestamp_start
     time_per_push = float(time_to_spend)/len(user_ids)
     target = time.time()
+    logger.info("multimsg {} {} {}".format(len(user_ids), outstading, msg.message))
     for i, id in enumerate(user_ids):
         target += time_per_push
         s_msg = messages.SinglePush(user_id=id, message=msg.message, target_timestamp=target)
         exchange.publish(AsyncpMessage(s_msg.__dict__), routing_key)
+        outstading += 1
         if i % 100 == 0: #give away control every 100
             await asyncio.sleep(0)
 
@@ -65,6 +69,9 @@ async def single_message_handler(msg):
 
 
 def scheduled_cb(msg):
+    global outstading
+    logger.info("{} {}".format("outstanding", outstading))
+    outstading -= 1
     loop = asyncio.get_event_loop()
     loop.create_task(call_to_server(msg))
 
