@@ -46,7 +46,6 @@ async def multi_message_handler(msg):
 
     user_ids = msg.user_ids
     random.shuffle(msg.user_ids)
-    msg.ack()
 
     time_to_spend = msg.target_timestamp_end - msg.target_timestamp_start
     time_per_push = float(time_to_spend)/len(user_ids)
@@ -67,7 +66,6 @@ async def single_message_handler(msg):
     delay = delay if delay>0 else 0
     now = loop.time()
     loop.call_at(now+delay, scheduled_cb, msg)
-    msg.ack()
 
 
 def scheduled_cb(msg):

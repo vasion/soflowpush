@@ -33,6 +33,8 @@ def cb(msg):
     if isinstance(_msg, messages.SinglePush):
         loop.create_task(handlers.single_message_handler(_msg))
 
+    msg.ack()
+
 
 @asyncio.coroutine
 def consume(rabbit_routing_key="routing.soflowpush",
