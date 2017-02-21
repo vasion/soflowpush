@@ -20,6 +20,7 @@ loop = asyncio.get_event_loop()
 
 
 def cb(msg):
+    handlers.logger.info("msg_recv 1 {}".format(msg.message_id))
     try:
         _msg = messages.Message.parse(msg.json())
     except messages.ParseError:
@@ -66,7 +67,7 @@ def consume(rabbit_routing_key="routing.soflowpush",
                 channel, connection, queue, exchange, routing_key = yield from create_connection(
 
                 )
-                consumer = yield from queue.consume(cb, no_ack=True)
+                consumer = yield from queue.consume(cb)
             except Exception as e:
                 print(e)
                 print("failed to establish")
