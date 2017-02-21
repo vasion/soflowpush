@@ -8,14 +8,16 @@ class Message(object):
 
     def __init__(self, message_type=None, *args, **kwargs):
         self.message_type = message_type if message_type is not None else self.TYPE
+        self.message_id = None
 
     @classmethod
-    def parse(cls, dict_message):
+    def parse(cls, dict_message, original=None):
         if not isinstance(dict_message, dict):
             raise ParseError
         for c in cls.__subclasses__():
             if c.TYPE == dict_message.get("message_type"):
                 instance = c(**dict_message)
+                instance.message_id = original.message_id if original is not None else None
                 return instance
         raise ParseError
 

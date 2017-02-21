@@ -32,6 +32,7 @@ def cb(msg):
     if isinstance(_msg, messages.MultiPush):
         loop.create_task(handlers.multi_message_handler(_msg))
     if isinstance(_msg, messages.SinglePush):
+        handlers.logger.info("out_semaphore {}".format(outstanding._value))
         loop.create_task(handlers.single_message_handler(_msg))
 
     msg.ack()
