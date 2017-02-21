@@ -50,7 +50,7 @@ async def multi_message_handler(msg):
     time_to_spend = msg.target_timestamp_end - msg.target_timestamp_start
     time_per_push = float(time_to_spend)/len(user_ids)
     target = time.time()
-    logger.info("multimsg {} {} {}".format(len(user_ids), outstading, msg.message))
+    logger.info("multimsg {} {} {}".format(len(user_ids), outstanding, msg.message))
     for i, id in enumerate(user_ids):
         target += time_per_push
         s_msg = messages.SinglePush(user_id=id, message="{} {} {}".format(id, target, msg.message), target_timestamp=target)
