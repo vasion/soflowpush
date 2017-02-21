@@ -55,6 +55,7 @@ async def multi_message_handler(msg):
         target += time_per_push
         s_msg = messages.SinglePush(user_id=id, message="{} {} {}".format(id, target, msg.message), target_timestamp=target)
         exchange.publish(AsyncpMessage(s_msg.__dict__), routing_key)
+        logger.info("mmsg_to_publish {} {}".format(id, msg.message))
         outstanding += 1
         if i % 100 == 0: #give away control every 100
             await asyncio.sleep(0)
